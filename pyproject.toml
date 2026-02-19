@@ -1,0 +1,23 @@
+[project]
+name = "tax-product"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "dotenv>=0.9.9",
+    "fastapi>=0.129.0",
+    "langchain>=1.2.8",
+    "langchain-community>=0.4.1",
+    "langchain-google-genai>=4.2.0",
+    "langchain-groq>=1.1.2",
+    "langchain-pinecone>=0.2.13",
+    "matplotlib>=3.10.8",
+    "pathlib>=1.0.1",
+    "pinecone>=7.3.0",
+    "pydantic>=2.12.5",
+    "scikit-learn>=1.8.0",
+    "uvicorn>=0.41.0",
+    "vercel>=0.5.0",
+]

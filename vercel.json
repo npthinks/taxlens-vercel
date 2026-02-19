@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "functions": {
+        "api/ask.py": {
+            "runtime": "@vercel/python@3"
+        }
+    },
+    "routes": [
+        {
+            "src": "/api/ask",
+            "dest": "api/ask.py"
+        },
+        {
+            "src": "/",
+            "dest": "api/ask.py"
+        }
+    ]
+}
