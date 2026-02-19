@@ -2,18 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "ask/api.py",
+            "src": "api/ask.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
-            "src": "/api/ask",
-            "dest": "ask/api.py"
-        },
-        {
-            "src": "/",
-            "dest": "ask/api.py"
+            "src": "/(.*)",
+            "dest": "api/ask.py"
         }
     ]
 }
