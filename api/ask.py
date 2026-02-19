@@ -46,7 +46,10 @@ prompt = PromptTemplate(input_variables = ["context", "question"],
 
 class Question(BaseModel):
     question: str
-
+@app.get("/")
+def read_root():
+    return "Taxlens Fast API"
+    
 @app.post("/api/ask")
 async def ask(question: Question):
     # Get relevant docs
