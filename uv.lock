@@ -2692,7 +2692,6 @@ dependencies = [
     { name = "pydantic" },
     { name = "scikit-learn" },
     { name = "uvicorn" },
-    { name = "vercel" },
 ]
 
 [package.metadata]
@@ -2711,7 +2710,6 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "scikit-learn", specifier = ">=1.8.0" },
     { name = "uvicorn", specifier = ">=0.41.0" },
-    { name = "vercel", specifier = ">=0.5.0" },
 ]
 
 [[package]]
@@ -2881,22 +2879,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/32/ce/eeb58ae4ac36fe09e3842eb02e0eb676bf2c53ae062b98f1b2531673efdd/uvicorn-0.41.0.tar.gz", hash = "sha256:09d11cf7008da33113824ee5a1c6422d89fbc2ff476540d69a34c87fab8b571a", size = 82633, upload-time = "2026-02-16T23:07:24.1Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/83/e4/d04a086285c20886c0daad0e026f250869201013d18f81d9ff5eada73a88/uvicorn-0.41.0-py3-none-any.whl", hash = "sha256:29e35b1d2c36a04b9e180d4007ede3bcb32a85fbdfd6c6aeb3f26839de088187", size = 68783, upload-time = "2026-02-16T23:07:22.357Z" },
-]
-
-[[package]]
-name = "vercel"
-version = "0.5.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anyio" },
-    { name = "httpx" },
-    { name = "pydantic" },
-    { name = "python-dotenv" },
-    { name = "websockets" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/79/50/f5abe32c1ca3f92f6bb41e1dd732d515042f30baa3e7610c1f1ed8dd1a5f/vercel-0.5.0.tar.gz", hash = "sha256:876f7c5f97eb1acb3cc2a027ec73809dae50b07e3ba4f4f3cb22a60486401839", size = 60236, upload-time = "2026-02-19T13:58:16.035Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/50/51/4a7a1045c3cda5233fd9429e05cc26c661203679e30e4c385a9da1f740ea/vercel-0.5.0-py3-none-any.whl", hash = "sha256:2de1bcabee2123e0d7edb5bd5a9bc496aa93a5742e15b0ca073bd0536ecb914f", size = 73949, upload-time = "2026-02-19T13:58:14.614Z" },
 ]
 
 [[package]]
