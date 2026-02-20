@@ -30,7 +30,7 @@ app.add_middleware(
 embeddings = PineconeEmbeddings(model="llama-text-embed-v2")
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
-vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percerntruling")
+vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percentruling")
 #llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
 llm = ChatGroq(model="qwen/qwen3-32b",
@@ -42,7 +42,8 @@ llm = ChatGroq(model="qwen/qwen3-32b",
 template = """
 You are an assistant to help me answer tax questions.
 
-Answer the question that the user asks only based on the context.
+Answer the question that the user asks based on the context. 
+If the answer is not in the context, say so.
 
 Question: {question}
 Context: {context}
@@ -70,7 +71,8 @@ async def ask(question: Question):
     
     return {
         "answer": result.content,
-        "sources": [{"content": doc.page_content[:200] + "..." for doc in docs}],
+        "sources" : [doc.page_content for doc in docs]
+        #"sources": [{"content": doc.page_content[:200] + "..." for doc in docs}],
     }
 
 if __name__ == "__main__":
