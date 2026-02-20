@@ -9,14 +9,17 @@ from pinecone import Pinecone
 from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 from uuid import uuid4
+from langchain_groq import ChatGroq
 
 load_dotenv()
 app = FastAPI(title = "Taxlens Fast API")
 
+origins = ["https://taxlens.biz", "https://www.taxlens.biz"]
+
 # CORS for taxlens.biz
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ["*"],
+    allow_origins = origins,
     # allow_origins=["https://taxlens.biz", "https://www.taxlens.biz", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -28,7 +31,12 @@ embeddings = PineconeEmbeddings(model="llama-text-embed-v2")
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
 vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percerntruling")
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+#llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+
+llm = ChatGroq(model="qwen/qwen3-32b",
+                groq_api_key=os.getenv("GROQ_API_KEY"),
+                reasoning_effort= "none"
+                )
 
 # Prompt template
 template = """
