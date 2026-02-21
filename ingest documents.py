@@ -50,7 +50,7 @@ try:
     # )
     # docs = loader.load()
 
-    loader = TextLoader("/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/employer30.txt")
+    loader = TextLoader("/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/InternationalStudents.txt")
     docs = loader.load()
     print(f"Loaded {len(docs)} documents.")
 except Exception as e:

@@ -40,7 +40,7 @@ llm = ChatGroq(model="qwen/qwen3-32b",
 
 # Prompt template
 template = """
-You are an assistant to help me answer tax questions.
+You are an assistant to answer the user's questions for tax related information.
 
 Answer the question that the user asks based on the context. 
 If the answer is not in the context, say so.
@@ -70,8 +70,8 @@ async def ask(question: Question):
     result = llm.invoke(final_prompt)
     
     return {
-        "answer": result.content,
-        "sources" : [doc.page_content for doc in docs]
+        "answer": result.content
+        #"sources" : [doc.page_content for doc in docs]
         #"sources": [{"content": doc.page_content[:200] + "..." for doc in docs}],
     }
 
