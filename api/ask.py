@@ -10,6 +10,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 from uuid import uuid4
 from langchain_groq import ChatGroq
+import re
 
 load_dotenv()
 app = FastAPI(title = "Taxlens Fast API")
@@ -48,10 +49,10 @@ You have information on:
 - 30% ruling for employees
 
 Answer the question that the user asks based on the context.
-If the answer is not in the context, say "I do not have enough information in the provided documents to answer this question."
-Be polite and professional.
-
-IMPORTANT: Do NOT use markdown headers (like ###). Instead, use bold text (like **bold**) or bullet points to organize your response.
+- If the answer is not in the context, say "I do not have enough information in the provided documents to answer this question."
+- Be polite and professional.
+- Do not use markdown headers (like ###). Instead, use bullet points to organize your response.
+- Return the answer in clean plain text.
 
 Question: {question}
 Context: {context}
@@ -78,9 +79,14 @@ async def ask(question: Question):
     result = llm.invoke(final_prompt)
     
     answer_text = result.content
+
+    def clean_text(text):
+        text = re.sub(r"\*\*(.*?)\*\*", r"\1", answer_text)  # remove bold
+        text = text.replace("*", "")
+        return text
     
     return {
-        "answer": answer_text
+        "answer": clean_text(answer_text)
         #"sources" : [doc.page_content for doc in docs]
         #"sources": [{"content": doc.page_content[:200] + "..." for doc in docs}],
     }
