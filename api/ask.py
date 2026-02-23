@@ -42,6 +42,8 @@ llm = ChatGroq(model="qwen/qwen3-32b",
 template = """
 You are an assistant to answer the user's questions for tax related information.
 
+You have infromation on
+
 Answer the question that the user asks based on the context. 
 If the answer is not in the context, say so.
 
@@ -69,13 +71,7 @@ async def ask(question: Question):
     final_prompt = prompt.format(context=context, question=question.question)
     result = llm.invoke(final_prompt)
     
-    # Process markdown formatting to HTML for the frontend
-    import re
     answer_text = result.content
-    # Replace **text** with <b>text</b>
-    answer_text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', answer_text)
-    # Ensure newlines form proper breaks in HTML
-    answer_text = answer_text.replace('\n', '<br>')
     
     return {
         "answer": answer_text
