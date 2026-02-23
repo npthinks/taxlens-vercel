@@ -43,15 +43,20 @@ vectorstore = PineconeVectorStore(
 # Load Documents
 print("Loading documents...")
 try:
-    # loader = DirectoryLoader(
-    #     "./Documents/",
-    #     glob="**/*.txt",
-    #     loader_cls=TextLoader
-    # )
-    # docs = loader.load()
-
-    loader = TextLoader("/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/InternationalStudents.txt")
-    docs = loader.load()
+    documents_to_load = [
+        {"path": "/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/InternationalStudents.txt", "source_metadata": {"category": "internationalStudents"}},
+        {"path": "/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/employer30.txt", "source_metadata": {"category": "employer30"}},
+        {"path": "/Users/nishanth_p/Documents/Interview_Code/Tax Discovery Product/Documents/employees30.txt", "source_metadata": {"category": "employee30"}}
+    ]
+    
+    docs = []
+    for doc_info in documents_to_load:
+        loader = TextLoader(doc_info["path"])
+        loaded_docs = loader.load()
+        for doc in loaded_docs:
+            doc.metadata.update(doc_info["source_metadata"])
+        docs.extend(loaded_docs)
+        
     print(f"Loaded {len(docs)} documents.")
 except Exception as e:
     print(f"Error loading documents: {e}")

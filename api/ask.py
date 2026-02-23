@@ -69,8 +69,16 @@ async def ask(question: Question):
     final_prompt = prompt.format(context=context, question=question.question)
     result = llm.invoke(final_prompt)
     
+    # Process markdown formatting to HTML for the frontend
+    import re
+    answer_text = result.content
+    # Replace **text** with <b>text</b>
+    answer_text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', answer_text)
+    # Ensure newlines form proper breaks in HTML
+    answer_text = answer_text.replace('\n', '<br>')
+    
     return {
-        "answer": result.content
+        "answer": answer_text
         #"sources" : [doc.page_content for doc in docs]
         #"sources": [{"content": doc.page_content[:200] + "..." for doc in docs}],
     }
