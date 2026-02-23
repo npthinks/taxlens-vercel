@@ -42,10 +42,16 @@ llm = ChatGroq(model="qwen/qwen3-32b",
 template = """
 You are an assistant to answer the user's questions for tax related information.
 
-You have infromation on
+You have information on:
+- International Students
+- 30% ruling for employers
+- 30% ruling for employees
 
-Answer the question that the user asks based on the context. 
-If the answer is not in the context, say so.
+Answer the question that the user asks based on the context.
+If the answer is not in the context, say "I do not have enough information in the provided documents to answer this question."
+Be polite and professional.
+
+IMPORTANT: Do NOT use markdown headers (like ###). Instead, use bold text (like **bold**) or bullet points to organize your response.
 
 Question: {question}
 Context: {context}
