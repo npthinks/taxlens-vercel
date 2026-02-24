@@ -27,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Your existing sfetup (copy from main script)
+
 embeddings = PineconeEmbeddings(model="llama-text-embed-v2")
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
@@ -40,21 +40,21 @@ llm = ChatGroq(model="llama-3.3-70b-versatile",
                 #reasoning_effort= "none"
                 )
 
-# Prompt template
+
 template = """
-You are TaxLensa, an AI assistant for tax related information.
+You are TaxLens, an AI assistant for tax related information.
 
 You have information on:
 - International Students
 - 30% ruling for employers
 - 30% ruling for employees
 
-Answer the question that the user asks based on the context.
-- If the answer is not in the context, say "I do not have enough information to answer this question."
+Answer the question that the user asks based on the knowledge.
+- If the answer is not in the knowledge, say "I do not have enough information to answer this question."
 - Be polite and professional.
 
 Question: {question}
-Context: {context}
+Knowledge: {context}
 Answer:
 """
 
@@ -69,18 +69,17 @@ def read_root():
     
 @app.post("/api/ask")
 async def ask(question: Question):
-    # Get relevant docs
+
     docs = vectorstore.similarity_search(question.question, k=5)
-    context = "\n\n".join(doc.page_content for doc in docs)
+    knowledge = "\n\n".join(doc.page_content for doc in docs)
     
-    # Generate answer
-    final_prompt = prompt.format(context=context, question=question.question)
+    final_prompt = prompt.format(context=knowledge, question=question.question)
     result = llm.invoke(final_prompt)
     
     answer_text = result.content
 
     def clean_text(text):
-        text = re.sub(r"\*\*(.*?)\*\*", r"\1", answer_text)  # remove bold
+        text = re.sub(r"\*\*(.*?)\*\*", r"\1", answer_text) 
         text = text.replace("*", "")
         return text
     
