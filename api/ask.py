@@ -34,7 +34,7 @@ index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
 vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percentruling")
 #llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
-llm = ChatGroq(model="llama-3.3-70b-versatile",
+llm = ChatGroq(model="meta-llama/llama-4-maverick-17b-128e-instruct",
                 #model="qwen/qwen3-32b",
                 groq_api_key=os.getenv("GROQ_API_KEY"),
                 #reasoning_effort= "none"
