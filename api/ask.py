@@ -34,14 +34,15 @@ index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
 vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percentruling")
 #llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
-llm = ChatGroq(model="qwen/qwen3-32b",
+llm = ChatGroq(model="llama-3.3-70b-versatile",
+                #model="qwen/qwen3-32b",
                 groq_api_key=os.getenv("GROQ_API_KEY"),
-                reasoning_effort= "none"
+                #reasoning_effort= "none"
                 )
 
 # Prompt template
 template = """
-You are an assistant to answer the user's questions for tax related information.
+You are TaxLensa, an AI assistant for tax related information.
 
 You have information on:
 - International Students
@@ -49,10 +50,8 @@ You have information on:
 - 30% ruling for employees
 
 Answer the question that the user asks based on the context.
-- If the answer is not in the context, say "I do not have enough information in the provided documents to answer this question."
+- If the answer is not in the context, say "I do not have enough information to answer this question."
 - Be polite and professional.
-- Do not use markdown headers (like ###). Instead, use bullet points to organize your response.
-- Return the answer in clean plain text.
 
 Question: {question}
 Context: {context}
