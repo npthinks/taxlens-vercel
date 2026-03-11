@@ -34,7 +34,8 @@ index = pc.Index(os.getenv("PINECONE_INDEX_NAME"))
 vectorstore = PineconeVectorStore(index=index, embedding=embeddings, namespace="30percentruling")
 #llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
-llm = ChatGroq(model="llama-3.3-70b-versatile",
+llm = ChatGroq(#model="meta-llama/llama-4-maverick-17b-128e-instruct",
+                model= "meta-llama/llama-4-scout-17b-16e-instruct",
                 #model="qwen/qwen3-32b",
                 groq_api_key=os.getenv("GROQ_API_KEY"),
                 #reasoning_effort= "none"
@@ -91,4 +92,4 @@ async def ask(question: Question):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=3500)
