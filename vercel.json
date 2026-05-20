@@ -3,11 +3,7 @@
     "builds": [
         {
             "src": "api/ask.py",
-            "use": "@vercel/python",
-            "config": {
-                "maxLambdaSize": "50mb",
-                "runtime": "python3.11"
-            }
+            "use": "@vercel/python"
         }
     ],
     "routes": [
