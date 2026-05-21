@@ -39,6 +39,11 @@ if not logger.handlers:
     handler.setLevel(logging.INFO)
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
+
+# Silence uvicorn access logs duplicating our logs
+logging.getLogger("uvicorn.access").handlers = []
+logging.getLogger("uvicorn.error").handlers = []
+logging.getLogger("uvicorn").propagate = False
     
 def log_event(event_type: str, data: dict):
     log_entry = {
