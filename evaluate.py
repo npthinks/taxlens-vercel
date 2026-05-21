@@ -3,6 +3,11 @@ import os
 
 load_dotenv()
 
+# Set evaluation project separately from production
+os.environ["LANGSMITH_PROJECT"] = "taxlens-evaluation"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
+
 from langsmith import Client
 from langsmith.evaluation import evaluate
 import requests
@@ -119,7 +124,6 @@ def hallucination_evaluator(run, example):
     sources = run.outputs.get("sources", [])
     expected = example.outputs.get("answer", "").lower()
 
-    # Check 1 - answer contains no information phrase
     no_info_phrase = "i do not have enough information"
     if no_info_phrase in answer:
         return {
@@ -128,7 +132,6 @@ def hallucination_evaluator(run, example):
             "comment": "No hallucination detected. System correctly admitted lack of knowledge."
         }
 
-    # Check 2 - answer has no sources to ground it
     if len(sources) == 0:
         return {
             "key": "hallucination",
@@ -136,7 +139,6 @@ def hallucination_evaluator(run, example):
             "comment": "Potential hallucination. Answer generated with no retrieved sources."
         }
 
-    # Check 3 - check if key expected words appear in answer
     expected_words = set(expected.split())
     answer_words = set(answer.split())
     overlap = expected_words.intersection(answer_words)

@@ -31,9 +31,12 @@ langsmith_client = LangSmithClient(api_key=os.getenv("LANGSMITH_API_KEY"))
 # ─── Structured Logger ─────────────────────────────────────────────
 logger = logging.getLogger("taxlens")
 logger.setLevel(logging.INFO)
-handler = logging.StreamHandler()
-handler.setFormatter(logging.Formatter("%(message)s"))
-logger.addHandler(handler)
+
+# Only add handler if not already added
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler)
 
 def log_event(event_type: str, data: dict):
     log_entry = {
@@ -142,13 +145,13 @@ async def ask(question: Question):
         inputs={"question": question.question}
     ) as run:
 
-        # Step 1 — Log incoming query
+        # Log incoming query
         log_event("query_received", {
             "query_id": query_id,
             "question": question.question
         })
 
-        # Step 2 — Retrieve documents
+        # Retrieve documents
         retrieval_start = time.time()
         docs = vectorstore.similarity_search(question.question, k=5)
         retrieval_latency = round(time.time() - retrieval_start, 3)
@@ -160,14 +163,14 @@ async def ask(question: Question):
             "sources": [doc.page_content[:100] for doc in docs]
         })
 
-        # Step 3 — Build prompt
+        # Build prompt
         knowledge = "\n\n".join(doc.page_content for doc in docs)
         final_prompt = prompt.format(
             context=knowledge,
             question=question.question
         )
 
-        # Step 4 — Generate answer
+        # Generate answer
         generation_start = time.time()
         result = llm.invoke(final_prompt)
         generation_latency = round(time.time() - generation_start, 3)

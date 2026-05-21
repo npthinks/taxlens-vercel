@@ -8,8 +8,6 @@ os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_PROJECT"] = "taxlens-production"
 
-
-
 client = Client()
 
 # Create a dataset
