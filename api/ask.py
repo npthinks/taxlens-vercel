@@ -9,6 +9,7 @@ import time
 from datetime import datetime
 from uuid import uuid4
 import re
+import sys
 
 # ─── Load env FIRST before anything else ──────────────────────────
 load_dotenv()
@@ -31,13 +32,14 @@ langsmith_client = LangSmithClient(api_key=os.getenv("LANGSMITH_API_KEY"))
 # ─── Structured Logger ─────────────────────────────────────────────
 logger = logging.getLogger("taxlens")
 logger.setLevel(logging.INFO)
+logger.propagate = False
 
-# Only add handler if not already added
 if not logger.handlers:
-    handler = logging.StreamHandler()
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.INFO)
     handler.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler)
-
+    
 def log_event(event_type: str, data: dict):
     log_entry = {
         "timestamp": datetime.utcnow().isoformat(),
